@@ -1,4 +1,4 @@
-package com.debreuck.neirynck.opdracht.parse;
+package com.debreuck.neirynck.opdracht.logline;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
