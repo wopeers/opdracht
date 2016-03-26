@@ -21,6 +21,9 @@ public class Logline {
         this.logMessage = logMessage;
     }
 
+    public Logline() {
+    }
+
     public Date getTimestamp() {
         return timestamp;
     }
