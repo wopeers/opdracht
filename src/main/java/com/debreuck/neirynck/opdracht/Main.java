@@ -22,6 +22,7 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         reader.lines()
+                .filter(s -> s.contains("Rendering"))
                 .filter(loglineParser::isLogline)
                 .map(loglineParser::parseToLogline)
                 .forEach(reportFromLoglinesGenerator);
