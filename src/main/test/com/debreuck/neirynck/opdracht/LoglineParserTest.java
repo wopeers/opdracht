@@ -3,6 +3,7 @@ package com.debreuck.neirynck.opdracht;
 import com.debreuck.neirynck.opdracht.logline.ILoglineParser;
 import com.debreuck.neirynck.opdracht.logline.Loglevel;
 import com.debreuck.neirynck.opdracht.logline.Logline;
+import com.debreuck.neirynck.opdracht.logline.ParseException;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Rule;
@@ -28,7 +29,7 @@ public class LoglineParserTest {
     }
 
     @Test
-    public void shouldParseFullLine() {
+    public void shouldParseFullLine() throws ParseException {
         String line = "2010-10-06 09:02:10,000 [Thread-5] DEBUG [GeneratingClass]: simpleLogMessage";
         Logline logline = loglineParser.parseToLogline(line);
         AssertThat(logline)
@@ -41,42 +42,42 @@ public class LoglineParserTest {
 
     @Test
     @Parameters(source = LoglineProvider.class, method = "provideValidLoglineWithExpectedTimestamp")
-    public void shouldCreateExpectedTimestamp(String line, String expectedTimestamp) {
+    public void shouldCreateExpectedTimestamp(String line, String expectedTimestamp) throws ParseException {
         Logline logline = loglineParser.parseToLogline(line);
         AssertThat(logline).hasFormattedTimestamp(expectedTimestamp);
     }
 
     @Test
     @Parameters(source = LoglineProvider.class, method = "provideValidLoglineWithExpectedThread")
-    public void shouldCreateExpectedThread(String line, String expectedThread) {
+    public void shouldCreateExpectedThread(String line, String expectedThread) throws ParseException {
         Logline logline = loglineParser.parseToLogline(line);
         AssertThat(logline).hasThread(expectedThread);
     }
 
     @Test
     @Parameters(source = LoglineProvider.class, method = "provideValidLoglineWithExpectedLoglevel")
-    public void shouldCreateExpectedMessage(String line, Loglevel expectedLoglevel) {
+    public void shouldCreateExpectedMessage(String line, Loglevel expectedLoglevel) throws ParseException {
         Logline logline = loglineParser.parseToLogline(line);
         AssertThat(logline).hasLoglevel(expectedLoglevel);
     }
 
     @Test
     @Parameters(source = LoglineProvider.class, method = "provideValidLoglineWithExpectedGeneratingClass")
-    public void shouldCreateExpectedGeneratingClass(String line, String expectedClass) {
+    public void shouldCreateExpectedGeneratingClass(String line, String expectedClass) throws ParseException {
         Logline logline = loglineParser.parseToLogline(line);
         AssertThat(logline).hasGeneratedClass(expectedClass);
     }
 
     @Test
     @Parameters(source = LoglineProvider.class, method = "provideValidLoglineWithExpectedMessage")
-    public void shouldCreateExpectedMessage(String line, String expectedMessage) {
+    public void shouldCreateExpectedMessage(String line, String expectedMessage) throws ParseException {
         Logline logline = loglineParser.parseToLogline(line);
         AssertThat(logline).hasLogMessage(expectedMessage);
     }
 
-    @Test( expected = Exception.class)
+    @Test(expected = ParseException.class)
     @Parameters(source = LoglineProvider.class, method = "provideInvalidLoglines")
-    public void shouldThrowException(String invalidLogline) {
+    public void shouldThrowException(String invalidLogline) throws ParseException {
         Logline logline = loglineParser.parseToLogline(invalidLogline);
     }
 

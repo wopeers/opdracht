@@ -5,6 +5,6 @@ public enum Loglevel {
     DEBUG,
     INFO,
     WARN,
-    ERROR;
+    ERROR
 
 }
