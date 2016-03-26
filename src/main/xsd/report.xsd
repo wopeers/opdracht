@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified"
+	   targetNamespace="http://debreuck.neirynck.com/opdracht/report"
+	   xmlns="http://debreuck.neirynck.com/opdracht/report"
+	   xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    
+  <xs:element name="rendering">
+    <xs:complexType>
+      <xs:sequence>
+	<xs:element name="document" type="xs:integer"/>
+	<xs:element name="page" type="xs:integer"/>
+	<xs:element name="uid" type="xs:string"/>
+	<xs:element name="start" type="xs:string" maxOccurs="unbounded"/>
+	<xs:element name="get" type="xs:string" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="summary">
+    <xs:complexType>
+      <xs:sequence>
+	<xs:element name="count" type="xs:integer"/>
+	<xs:element name="duplicates" type="xs:integer"/>
+	<xs:element name="unnecessary" type="xs:integer"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="report">
+    <xs:complexType>
+      <xs:sequence>
+	<xs:element ref="rendering" minOccurs="0" maxOccurs="unbounded"/>
+	<xs:element ref="summary"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+</xs:schema>
