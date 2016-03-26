@@ -1,4 +1,6 @@
-package com.debreuck.neirynck.opdracht.logline;
+package com.debreuck.neirynck.opdracht.logline.parse;
+
+import com.debreuck.neirynck.opdracht.logline.model.Logline;
 
 public interface ILoglineParser {
 

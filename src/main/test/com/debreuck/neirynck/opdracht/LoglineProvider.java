@@ -1,6 +1,6 @@
 package com.debreuck.neirynck.opdracht;
 
-import com.debreuck.neirynck.opdracht.logline.Loglevel;
+import com.debreuck.neirynck.opdracht.logline.model.Loglevel;
 
 import static junitparams.JUnitParamsRunner.$;
 

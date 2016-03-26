@@ -1,5 +1,7 @@
 package com.debreuck.neirynck.opdracht.logline;
 
+import com.debreuck.neirynck.opdracht.logline.model.Loglevel;
+import com.debreuck.neirynck.opdracht.logline.model.Logline;
 import org.assertj.core.api.AbstractAssert;
 
 public class LoglineAssert extends AbstractAssert<LoglineAssert, Logline> {

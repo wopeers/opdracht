@@ -1,15 +1,15 @@
 package com.debreuck.neirynck.opdracht;
 
-import com.debreuck.neirynck.opdracht.logline.ILoglineParser;
-import com.debreuck.neirynck.opdracht.logline.Loglevel;
-import com.debreuck.neirynck.opdracht.logline.Logline;
-import com.debreuck.neirynck.opdracht.logline.ParseException;
+import com.debreuck.neirynck.opdracht.logline.parse.ILoglineParser;
+import com.debreuck.neirynck.opdracht.logline.model.Loglevel;
+import com.debreuck.neirynck.opdracht.logline.model.Logline;
+import com.debreuck.neirynck.opdracht.logline.parse.ParseException;
 
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.debreuck.neirynck.opdracht.logline.Logline.dateFormat;
+import static com.debreuck.neirynck.opdracht.logline.model.Logline.dateFormat;
 
 public class LoglineParser implements ILoglineParser {
 

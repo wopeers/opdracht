@@ -1,4 +1,4 @@
-package com.debreuck.neirynck.opdracht.logline;
+package com.debreuck.neirynck.opdracht.logline.model;
 
 public enum Loglevel {
 
