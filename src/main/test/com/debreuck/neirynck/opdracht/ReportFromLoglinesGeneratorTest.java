@@ -1,18 +1,23 @@
 package com.debreuck.neirynck.opdracht;
 
-import com.debreuck.neirynck.opdracht.report.ReportAssert;
+import com.debreuck.neirynck.opdracht.logline.model.Logline;
 import com.debreuck.neirynck.opdract.report.Report;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-import static com.debreuck.neirynck.opdracht.logline.model.LoglineBuilder.a;
-import static com.debreuck.neirynck.opdracht.logline.model.LoglineBuilder.startRenderingLogline;
+import static com.debreuck.neirynck.opdracht.logline.model.LoglineBuilder.*;
+import static com.debreuck.neirynck.opdracht.report.RenderingAssert.assertThatRendering;
+import static com.debreuck.neirynck.opdracht.report.ReportAssert.assertThatReport;
 import static java.math.BigInteger.valueOf;
 
+@RunWith(JUnitParamsRunner.class)
 public class ReportFromLoglinesGeneratorTest {
 
     private ReportFromLoglinesGenerator reportFromLoglinesGenerator = new ReportFromLoglinesGenerator();
@@ -21,19 +26,68 @@ public class ReportFromLoglinesGeneratorTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    public void shouldCreateRendering() {
-        StreamParameters(
-                a(startRenderingLogline(valueOf(1L), valueOf(1L), "thread1"))
+    public void shouldHaveCreatedRendering() {
+        StreamParameterList(
+                a(startRenderingLogline(valueOf(456L), valueOf(24L), "Thread-1")),
+                a(returnRenderingLogline("Thread-1", "uuid")),
+                a(getRenderingLogline("uuid"))
         ).forEach(reportFromLoglinesGenerator);
 
         Report report = reportFromLoglinesGenerator.generateReport();
 
-        ReportAssert.assertThat(report)
+        assertThatReport(report)
                 .hasNumberOfRenderings(1)
-                .hasSummaryCount(1);
+                .hasSummaryCount(1)
+                .hasSummaryUnnecessary(0)
+                .hasSummaryDuplicates(0);
+
+        assertThatRendering(report.getRendering().get(0))
+                .hasDocument(456L)
+                .hasPage(24L)
+                .hasUuid("uuid")
+                .hasNumberOfGets(1)
+                .hasNumberOfStarts(1);
     }
 
-    private <T> Stream<T> StreamParameters(T... elements) {
+    @Test
+    @Parameters(source = LoglineProvider.class, method = "provideLoglinesWithExpectedAmountOfRenderingsCreated")
+    public void shouldCreateExpectedAmountOfRenderings(int expectedAmount, Logline... loglines) {
+        StreamParameterList(loglines)
+                .forEach(reportFromLoglinesGenerator);
+
+
+        Report report = reportFromLoglinesGenerator.generateReport();
+
+        assertThatReport(report)
+                .hasNumberOfRenderings(expectedAmount)
+                .hasSummaryCount(expectedAmount);
+    }
+
+    @Test
+    @Parameters(source = LoglineProvider.class, method = "provideLoglinesWithExpectedAmountOfDuplicates")
+    public void shouldCreateExpectedAmountOfDuplicates(int expectedAmount, Logline... loglines) {
+        StreamParameterList(loglines)
+                .forEach(reportFromLoglinesGenerator);
+
+        Report report = reportFromLoglinesGenerator.generateReport();
+
+        assertThatReport(report)
+                .hasSummaryDuplicates(expectedAmount);
+    }
+
+    @Test
+    @Parameters(source = LoglineProvider.class, method = "provideLoglinesWithExpectedAmountOfUnnecessary")
+    public void shouldCreateExpectedAmountOfUnnecessary(int expectedAmount, Logline... loglines) {
+        StreamParameterList(loglines)
+                .forEach(reportFromLoglinesGenerator);
+
+        Report report = reportFromLoglinesGenerator.generateReport();
+
+        assertThatReport(report)
+                .hasSummaryUnnecessary(expectedAmount);
+    }
+
+    private <T> Stream<T> StreamParameterList(T... elements) {
         return Arrays.stream(elements);
     }
 

@@ -23,7 +23,7 @@ public class LoglineParserTest {
     public ExpectedException expectedException = ExpectedException.none();
 
     @Test
-    @Parameters(source = LoglineProvider.class, method = "provideLoglineWithValidity")
+    @Parameters(source = TextLinesProvider.class, method = "provideLoglineWithValidity")
     public void shouldReturnValidOrInvalidLogline(String line, boolean isValidLine) {
         assertFalse(loglineParser.isLogline(line) && !isValidLine);
     }
@@ -41,42 +41,42 @@ public class LoglineParserTest {
     }
 
     @Test
-    @Parameters(source = LoglineProvider.class, method = "provideValidLoglineWithExpectedTimestamp")
+    @Parameters(source = TextLinesProvider.class, method = "provideValidLoglineWithExpectedTimestamp")
     public void shouldCreateExpectedTimestamp(String line, String expectedTimestamp) throws ParseException {
         Logline logline = loglineParser.parseToLogline(line);
         AssertThat(logline).hasFormattedTimestamp(expectedTimestamp);
     }
 
     @Test
-    @Parameters(source = LoglineProvider.class, method = "provideValidLoglineWithExpectedThread")
+    @Parameters(source = TextLinesProvider.class, method = "provideValidLoglineWithExpectedThread")
     public void shouldCreateExpectedThread(String line, String expectedThread) throws ParseException {
         Logline logline = loglineParser.parseToLogline(line);
         AssertThat(logline).hasThread(expectedThread);
     }
 
     @Test
-    @Parameters(source = LoglineProvider.class, method = "provideValidLoglineWithExpectedLoglevel")
+    @Parameters(source = TextLinesProvider.class, method = "provideValidLoglineWithExpectedLoglevel")
     public void shouldCreateExpectedMessage(String line, Loglevel expectedLoglevel) throws ParseException {
         Logline logline = loglineParser.parseToLogline(line);
         AssertThat(logline).hasLoglevel(expectedLoglevel);
     }
 
     @Test
-    @Parameters(source = LoglineProvider.class, method = "provideValidLoglineWithExpectedGeneratingClass")
+    @Parameters(source = TextLinesProvider.class, method = "provideValidLoglineWithExpectedGeneratingClass")
     public void shouldCreateExpectedGeneratingClass(String line, String expectedClass) throws ParseException {
         Logline logline = loglineParser.parseToLogline(line);
         AssertThat(logline).hasGeneratedClass(expectedClass);
     }
 
     @Test
-    @Parameters(source = LoglineProvider.class, method = "provideValidLoglineWithExpectedMessage")
+    @Parameters(source = TextLinesProvider.class, method = "provideValidLoglineWithExpectedMessage")
     public void shouldCreateExpectedMessage(String line, String expectedMessage) throws ParseException {
         Logline logline = loglineParser.parseToLogline(line);
         AssertThat(logline).hasLogMessage(expectedMessage);
     }
 
     @Test(expected = ParseException.class)
-    @Parameters(source = LoglineProvider.class, method = "provideInvalidLoglines")
+    @Parameters(source = TextLinesProvider.class, method = "provideInvalidLoglines")
     public void shouldThrowException(String invalidLogline) throws ParseException {
         Logline logline = loglineParser.parseToLogline(invalidLogline);
     }

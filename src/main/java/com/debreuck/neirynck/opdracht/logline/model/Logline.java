@@ -29,7 +29,7 @@ public class Logline {
     }
 
     public String getFormattedTimeStamp() {
-        return dateFormat.format(timestamp);
+        return timestamp == null ? null : dateFormat.format(timestamp);
     }
 
     public void setTimestamp(Date timestamp) {

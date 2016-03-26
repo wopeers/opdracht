@@ -7,7 +7,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class ReportAssert extends AbstractAssert<ReportAssert, Report>{
 
-    public static ReportAssert assertThat(Report actual) { return new ReportAssert(actual); }
+    public static ReportAssert assertThatReport(Report actual) { return new ReportAssert(actual); }
 
     private ReportAssert(Report actual) { super(actual, ReportAssert.class); }
 

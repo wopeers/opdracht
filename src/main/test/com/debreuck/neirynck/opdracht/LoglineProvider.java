@@ -1,72 +1,90 @@
 package com.debreuck.neirynck.opdracht;
 
-import com.debreuck.neirynck.opdracht.logline.model.Loglevel;
-
+import static com.debreuck.neirynck.opdracht.logline.model.LoglineBuilder.*;
+import static java.math.BigInteger.valueOf;
 import static junitparams.JUnitParamsRunner.$;
 
 public class LoglineProvider {
 
-    public static Object[] provideLoglineWithValidity() {
+    public static Object[] provideLoglinesWithExpectedAmountOfRenderingsCreated() {
         return $(
-                $("2010-10-06 09:02:10,000 [Thread-5] DEBUG [GeneratingClass]: simpleLogMessage", true),
-                $("2010-10-06 09:02:10,000[ Thread-5 ]DEBUG[ GeneratingClass ]:simpleLogMessage", true),
-                $("\t2010-10-06 09:02:10,000 \t[Thread-5]  DEBUG \t[GeneratingClass]: \tsimpleLogMessage", true),
-                $("2010-10-06 09:02:10,000 [Thread-5] DEBUG [GeneratingClass]: simpleLogMessage", true),
-
-                $("2010-10-06 09:02:10,000 [Thread-5] DEBUG [GeneratingClass] : simpleLogMessage", false),
-                $("2010-10-06 09:02:10,000 [Thread-5] nonsense [GeneratingClass] : simpleLogMessage", false),
-                $("2010iasdfasdfalsd;f,000 [Thread-5] DEBUG [GeneratingClass]: simpleLogMessage", false),
-                $("2010-10-06 09:02:10,000 [] DEBUG [GeneratingClass]: simpleLogMessage", false),
-                $("2010-10-06 09:02:10,000 [Thread-5] DEBUG []: simpleLogMessage", false)
+                $(1, $Array(
+                        a(startRenderingLogline(valueOf(1L), valueOf(1L), "thread1"))
+                )),
+                $(2, $Array(
+                        a(startRenderingLogline(valueOf(1L), valueOf(1L), "thread1")),
+                        a(startRenderingLogline(valueOf(1L), valueOf(2L), "thread1"))
+                )),
+                $(3, $Array(
+                        a(startRenderingLogline(valueOf(1L), valueOf(1L), "thread1")),
+                        a(startRenderingLogline(valueOf(2L), valueOf(1L), "thread1")),
+                        a(startRenderingLogline(valueOf(3L), valueOf(1L), "thread1"))
+                )),
+                $(0, $Array(
+                        a(getRenderingLogline("uuid")),
+                        a(returnRenderingLogline("thread1", "uuid"))
+                )),
+                $(0, $Array(
+                        a(logLine())
+                ))
         );
     }
 
-    public static Object[] provideValidLoglineWithExpectedTimestamp() {
+    public static Object[] provideLoglinesWithExpectedAmountOfDuplicates() {
         return $(
-                $("2010-10-06 09:02:10,000 [Thread-5] DEBUG [GeneratingClass]: simpleLogMessage", "2010-10-06 09:02:10,000"),
-                $("\t   2010-10-06 09:02:10,000 [Thread-5] DEBUG [GeneratingClass]: simpleLogMessage", "2010-10-06 09:02:10,000")
+                $(0, $Array(
+                        a(startRenderingLogline(valueOf(1L), valueOf(1L), "thread1"))
+                )),
+                $(1, $Array(
+                        a(startRenderingLogline(valueOf(1L), valueOf(1L), "thread1")),
+                        a(startRenderingLogline(valueOf(1L), valueOf(1L), "thread1"))
+                )),
+                $(0, $Array(
+                        a(startRenderingLogline(valueOf(1L), valueOf(1L), "thread1")),
+                        a(startRenderingLogline(valueOf(3L), valueOf(1L), "thread1"))
+                )),
+                $(0, $Array(
+                        a(startRenderingLogline(valueOf(1L), valueOf(1L), "thread1")),
+                        a(getRenderingLogline("uuid")),
+                        a(returnRenderingLogline("thread1", "uuid")),
+                        a(logLine().withLogMessage("foo bar"))
+                ))
         );
     }
 
-    public static Object[] provideValidLoglineWithExpectedThread() {
+    public static Object[] provideLoglinesWithExpectedAmountOfUnnecessary() {
         return $(
-                $("2010-10-06 09:02:10,000 [Thread-5] DEBUG [GeneratingClass]: simpleLogMessage", "Thread-5"),
-                $("2010-10-06 09:02:10,000 [ Thread-5 ] DEBUG [GeneratingClass]: simpleLogMessage", "Thread-5")
+                $(1, $Array(
+                        a(startRenderingLogline(valueOf(1L), valueOf(1L), "thread1")),
+                        a(returnRenderingLogline("thread1", "uuid"))
+                )),
+                $(2, $Array(
+                        a(startRenderingLogline(valueOf(1L), valueOf(1L), "thread1")),
+                        a(startRenderingLogline(valueOf(2L), valueOf(1L), "thread1"))
+                )),
+                $(0, $Array(
+                        a(startRenderingLogline(valueOf(1L), valueOf(1L), "thread1")),
+                        a(returnRenderingLogline("thread1", "uuid")),
+                        a(getRenderingLogline("uuid"))
+                )),
+                $(0, $Array(
+                        a(startRenderingLogline(valueOf(1L), valueOf(1L), "thread1")),
+                        a(returnRenderingLogline("thread1", "uuid")),
+                        a(getRenderingLogline("uuid")),
+                        a(getRenderingLogline("uuid"))
+                )),
+                $(1, $Array(
+                        a(getRenderingLogline("uuid")),
+                        a(returnRenderingLogline("thread1", "uuid")),
+                        a(startRenderingLogline(valueOf(1L), valueOf(1L), "thread1")),
+                        a(logLine().withLogMessage("foo bar"))
+                ))
         );
     }
 
-    public static Object[] provideValidLoglineWithExpectedLoglevel() {
-        return $(
-                $("2010-10-06 09:02:10,000 [Thread-5] DEBUG [GeneratingClass]: simpleLogMessage", Loglevel.DEBUG),
-                $("2010-10-06 09:02:10,000 [Thread-5]INFO[GeneratingClass]: simpleLogMessage", Loglevel.INFO),
-                $("2010-10-06 09:02:10,000 [Thread-5]  WARN [GeneratingClass]: simpleLogMessage", Loglevel.WARN),
-                $("2010-10-06 09:02:10,000 [Thread-5] ERROR  [GeneratingClass]: simpleLogMessage", Loglevel.ERROR)
-        );
+    public static <T> T[] $Array(T... elements){
+        return elements;
     }
 
-    public static Object[] provideValidLoglineWithExpectedGeneratingClass() {
-        return $(
-                $("2010-10-06 09:02:10,000 [Thread-5] DEBUG [GeneratingClass]: simpleLogMessage", "GeneratingClass"),
-                $("2010-10-06 09:02:10,000 [Thread-5] DEBUG [ GeneratingClass ]: simpleLogMessage", "GeneratingClass")
-        );
-    }
 
-    public static Object[] provideValidLoglineWithExpectedMessage() {
-        return $(
-                $("2010-10-06 09:02:10,000 [Thread-5] DEBUG [GeneratingClass]: simpleLogMessage", "simpleLogMessage"),
-                $("2010-10-06 09:02:10,000 [Thread-5] DEBUG [GeneratingClass]: weirdCharacters:\\!@#$%^&*()=_+`]';./?", "weirdCharacters:\\!@#$%^&*()=_+`]';./?"),
-                $("2010-10-06 09:02:10,000 [Thread-5] DEBUG [GeneratingClass]:  \t   whitespace     ", "whitespace"),
-                $("2010-10-06 09:02:10,506 [Thread-5] DEBUG [GeneratingClass]: a message with spaces", "a message with spaces")
-        );
-    }
-
-    public static Object[] provideInvalidLoglines() {
-        return $(
-                $("2010-10-06 09:02:10,000 [Thread-5] DEBUG [GeneratingClass] : simpleLogMessage"),
-                $("2010-10-06 09:02:10,000 [Thread-5] nonsense [GeneratingClass] : simpleLogMessage"),
-                $("2010iasdfasdfalsd;f,000 [Thread-5] DEBUG [GeneratingClass]: simpleLogMessage"),
-                $("2010-10-06 09:02:10,000 [] DEBUG [GeneratingClass]: simpleLogMessage"),
-                $("2010-10-06 09:02:10,000 [Thread-5] DEBUG []: simpleLogMessage")
-        );
-    }
 }

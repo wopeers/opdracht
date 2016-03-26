@@ -7,9 +7,9 @@ import static org.junit.Assert.assertNotNull;
 
 public class RenderingAssert extends AbstractAssert<RenderingAssert, Rendering> {
 
-    public static RenderingAssert assertThat(Rendering actual) { return new RenderingAssert(actual); }
+    public static RenderingAssert assertThatRendering(Rendering actual) { return new RenderingAssert(actual); }
 
-    private RenderingAssert(Rendering actual) { super(actual, ReportAssert.class); }
+    private RenderingAssert(Rendering actual) { super(actual, RenderingAssert.class); }
 
     public RenderingAssert hasDocument(long document) {
         isNotNull();
