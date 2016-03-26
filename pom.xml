@@ -16,6 +16,7 @@
         <junit.version>4.12</junit.version>
         <assertj-core.version>3.3.0</assertj-core.version>
         <JUnitParams.version>1.0.4</JUnitParams.version>
+        <guava.version>18.0</guava.version>
 
         <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
         <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
@@ -28,6 +29,11 @@
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>${commons-lang.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
