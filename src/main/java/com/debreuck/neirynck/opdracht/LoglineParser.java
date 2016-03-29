@@ -1,9 +1,10 @@
 package com.debreuck.neirynck.opdracht;
 
-import com.debreuck.neirynck.opdracht.logline.parse.ILoglineParser;
 import com.debreuck.neirynck.opdracht.logline.model.Loglevel;
 import com.debreuck.neirynck.opdracht.logline.model.Logline;
+import com.debreuck.neirynck.opdracht.logline.parse.ILoglineParser;
 import com.debreuck.neirynck.opdracht.logline.parse.ParseException;
+import com.google.common.base.Preconditions;
 
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -17,6 +18,9 @@ public class LoglineParser implements ILoglineParser {
 
     @Override
     public boolean isLogline(String line) {
+        if (line == null)
+            return false;
+
         Matcher m = loglinePattern.matcher(line);
         if (!m.find())
             return false;
@@ -34,6 +38,8 @@ public class LoglineParser implements ILoglineParser {
 
     @Override
     public Logline parseToLogline(String line) throws ParseException {
+        Preconditions.checkNotNull(line);
+
         Matcher m = loglinePattern.matcher(line);
         Date date;
         Loglevel loglevel;
