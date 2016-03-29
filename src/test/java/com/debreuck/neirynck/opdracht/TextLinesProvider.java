@@ -17,7 +17,8 @@ public class TextLinesProvider {
                 $("2010-10-06 09:02:10,000 [Thread-5] nonsense [GeneratingClass] : simpleLogMessage", false),
                 $("2010iasdfasdfalsd;f,000 [Thread-5] DEBUG [GeneratingClass]: simpleLogMessage", false),
                 $("2010-10-06 09:02:10,000 [] DEBUG [GeneratingClass]: simpleLogMessage", false),
-                $("2010-10-06 09:02:10,000 [Thread-5] DEBUG []: simpleLogMessage", false)
+                $("2010-10-06 09:02:10,000 [Thread-5] DEBUG []: simpleLogMessage", false),
+                $(null, false)
         );
     }
 
@@ -56,7 +57,8 @@ public class TextLinesProvider {
                 $("2010-10-06 09:02:10,000 [Thread-5] DEBUG [GeneratingClass]: simpleLogMessage", "simpleLogMessage"),
                 $("2010-10-06 09:02:10,000 [Thread-5] DEBUG [GeneratingClass]: weirdCharacters:\\!@#$%^&*()=_+`]';./?", "weirdCharacters:\\!@#$%^&*()=_+`]';./?"),
                 $("2010-10-06 09:02:10,000 [Thread-5] DEBUG [GeneratingClass]:  \t   whitespace     ", "whitespace"),
-                $("2010-10-06 09:02:10,506 [Thread-5] DEBUG [GeneratingClass]: a message with spaces", "a message with spaces")
+                $("2010-10-06 09:02:10,506 [Thread-5] DEBUG [GeneratingClass]: a message with spaces", "a message with spaces"),
+                $("2010-10-06 09:02:10,506 [Thread-5] DEBUG [GeneratingClass]: \t", "")
         );
     }
 
