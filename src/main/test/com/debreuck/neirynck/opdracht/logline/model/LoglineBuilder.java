@@ -13,18 +13,21 @@ public class LoglineBuilder {
 
     public static LoglineBuilder startRenderingLogline(BigInteger doc, BigInteger page, String thread) {
         return new LoglineBuilder()
+                .withTimeStamp(new Date())
                 .withThread(thread)
                 .withLogMessage(format("Executing request startRendering with arguments [%d, %d]",doc.longValue(),page.longValue()));
     }
 
     public static LoglineBuilder returnRenderingLogline(String thread, String uid) {
         return new LoglineBuilder()
+                .withTimeStamp(new Date())
                 .withThread(thread)
                 .withLogMessage(format("Service startRendering returned %s",uid));
     }
 
     public static LoglineBuilder getRenderingLogline(String uid) {
         return new LoglineBuilder()
+                .withTimeStamp(new Date())
                 .withLogMessage(format("Executing request getRendering with arguments [%s]",uid));
     }
 

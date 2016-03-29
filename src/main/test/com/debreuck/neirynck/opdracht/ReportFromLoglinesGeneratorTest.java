@@ -50,6 +50,37 @@ public class ReportFromLoglinesGeneratorTest {
     }
 
     @Test
+    public void shouldHaveCreatedRenderingWithMultipleStarts() {
+        StreamParameterList(
+            a(startRenderingLogline(valueOf(456L), valueOf(24L), "Thread-1")),
+            a(startRenderingLogline(valueOf(456L), valueOf(24L), "Thread-2")),
+            a(startRenderingLogline(valueOf(456L), valueOf(24L), "Thread-3")),
+            a(returnRenderingLogline("Thread-1", "uuid")),
+            a(returnRenderingLogline("Thread-2", "uuid"))
+        ).forEach(reportFromLoglinesGenerator);
+
+        Report report = reportFromLoglinesGenerator.generateReport();
+
+        assertThatRendering(report.getRendering().get(0))
+            .hasNumberOfStarts(2);
+    }
+
+    @Test
+    public void shouldHaveCreatedRenderingWithMultipleGets() {
+        StreamParameterList(
+                a(startRenderingLogline(valueOf(456L), valueOf(24L), "Thread-1")),
+                a(returnRenderingLogline("Thread-1", "uuid")),
+                a(getRenderingLogline("uuid")),
+                a(getRenderingLogline("uuid"))
+        ).forEach(reportFromLoglinesGenerator);
+
+        Report report = reportFromLoglinesGenerator.generateReport();
+
+        assertThatRendering(report.getRendering().get(0))
+                .hasNumberOfGets(2);
+    }
+
+    @Test
     @Parameters(source = LoglineProvider.class, method = "provideLoglinesWithExpectedAmountOfRenderingsCreated")
     public void shouldCreateExpectedAmountOfRenderings(int expectedAmount, Logline... loglines) {
         StreamParameterList(loglines)
