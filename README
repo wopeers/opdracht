@@ -1,0 +1,69 @@
+################################################################################
+                       Assignment Debreuck Neirynck 
+		  
+
+--------------------------------------------------------------------------------
+
+##################
+Table of Contents:
+------------------
+
+  - Overview
+  - Dependencies & Requirements
+  - Building
+  - Running
+
+
+########
+Overview
+--------
+
+Assignment Debreuck Neirynck: Small console application that generates an XML
+report on renderings from parsing a server log file.
+
+
+###########################
+Dependencies & Requirements
+---------------------------
+
+Assignment is written in the Java programming language and currently requires
+Java 8 to be run. Notable runtime dependencies are: Google guava library and
+Apache commons-lang & common-cli libraries. Test frameworks used are: Assertj &
+JUnitParams.
+
+Build requirements:
+
+        - Maven 3 installed as build tool
+        - JAVA_HOME environment variable pointing to a JDK8 installation
+        - A working internet connection
+
+Runtime requirement:
+
+        - JRE8 installed on system
+
+
+########
+Building
+--------
+
+Apache maven (http://maven.apache.org) is used to handle the build process. A
+local build can be triggered by invoking:
+
+    - mvn clean package
+
+
+#######
+Running
+-------
+
+usage: java -jar opdracht.jar [-f <arg>] [-h] [-o <arg>] [-t]
+
+Generate rendering report based on logfile
+ -f,--file <arg>     logfile to parse (default = stdin)
+ -h,--help
+ -o,--output <arg>   file to print report to (default = stdout)
+ -t,--time           print elapsed time
+
+Example (from project root folder):
+
+java -jar target/opdracht-1.0.0.jar --time -f examples/server.log -o Report.xml
